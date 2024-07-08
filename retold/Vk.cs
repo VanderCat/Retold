@@ -14,6 +14,11 @@ public static class Vk {
             AccessToken = Settings.Instance.Credentials.Vk.Token,
         });
         StartLongpoll();
+        
+        Service = new VkApi();
+        Service.Authorize(new ApiAuthParams {
+            AccessToken = Settings.Instance.Credentials.Vk.AppToken
+        });
     }
 
     public delegate void NewMessageEvent(Message messageNew);
@@ -66,7 +71,12 @@ public static class Vk {
                 var newMessages = updates.Where(x => x.Instance is MessageNew)
                     .Select(x => x.Instance as MessageNew);
                 foreach (var message in newMessages) {
-                    OnNewMessage.Invoke(message.Message);
+                    //try {
+                        OnNewMessage.Invoke(message.Message);
+                    //}
+                    //catch (Exception ex) {
+                        //Console.WriteLine(ex);
+                    //}
                 }
             }
         });
@@ -74,6 +84,7 @@ public static class Vk {
     }
 
     public static VkApi Api;
+    public static VkApi Service;
 
     public static void SendToChat(string message) {
         Api.Messages.Send(new MessagesSendParams {

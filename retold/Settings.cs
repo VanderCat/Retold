@@ -6,10 +6,12 @@ public sealed class Settings {
     public sealed class CredentialsSettings {
         public sealed class VkCredentialsSettings {
             public required string Token { get; set; }
+            public required string AppToken { get; set; }
             public required ulong GroupId { get; set; }
         }
         public sealed class DiscordCredentialsSettings {
             public required string Webhook { get; set; }
+            public required string Token { get; set; }
         }
         public required VkCredentialsSettings Vk { get; set; }
         public required DiscordCredentialsSettings Discord { get; set; }
